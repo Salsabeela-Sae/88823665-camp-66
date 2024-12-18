@@ -12,18 +12,51 @@
     <style>
         body {
             font-family: 'Kanit', sans-serif;
+            background-color: #f0f8ff; /* สีพื้นหลังของหน้า */
+            margin: 0;
+            padding: 0;
         }
         table {
             margin: auto;
             width: 80%;
+            background-color: #ffffff; /* สีพื้นหลังของฟอร์ม */
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* เพิ่มเงา */
+            overflow: hidden;
+        }
+        td {
+            padding: 10px;
+        }
+        button {
+            transition: all 0.3s ease; /* เพิ่มการเปลี่ยนแปลงเมื่อ hover */
+        }
+        button:hover {
+            background-color: #4CAF50; /* สีเมื่อ hover ปุ่ม */
+            color: #fff;
+            transform: scale(1.1); /* ขยายเล็กน้อยเมื่อ hover */
+        }
+        input[type="text"], input[type="date"], input[type="number"], textarea, select, input[type="file"] {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 8px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        input[type="text"]:hover, input[type="date"]:hover, input[type="number"]:hover, textarea:hover, select:hover, input[type="file"]:hover {
+            background-color: #f9f9f9; /* สีเมื่อ hover */
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
     <div class="container mt-4">
-        <h1 class="text-center">Workshop #HTML - FORM</h1>
+        <h1>Workshop #HTML - FORM</h1>
         <form action="#" method="post" enctype="multipart/form-data">
-            <table class="table table-bordered">
+            <table class="table">
                 <tr>
                     <td>ชื่อ</td>
                     <td><input type="text" id="firstname" name="firstname" class="form-control"></td>
