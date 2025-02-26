@@ -41,6 +41,8 @@ class RegisterController extends Controller
         $user->password = Hash::make($req->password);
         $user->save();
 
-        return redirect('/user')->with('success', 'สมัครสมาชิกสำเร็จ');
+
+
+        return redirect('/users');
     }
 }

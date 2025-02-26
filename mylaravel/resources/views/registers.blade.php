@@ -20,7 +20,7 @@
           </div>
         @endif
 
-        <form action="{{ url('/registers') }}" method="post">
+        <form action="{{ url('/register') }}" method="post">
         @csrf
 
           {{-- Name Field --}}

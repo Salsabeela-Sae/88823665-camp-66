@@ -34,7 +34,7 @@ class UserController extends Controller
         $user->password = $req->password;
         $user->save();
 
-        return redirect('/user');
+        return redirect('/users');
     }
 
 }

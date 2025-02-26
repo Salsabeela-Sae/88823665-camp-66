@@ -1,59 +1,99 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\MyController;
-use App\Http\Controllers\LoginController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\MyController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
-
-//ระบุ part url ตัว route
-Route::get('/home',
-    [HomeController::class, 'home']);
-
-Route::get('/user',
-    [UserController::class, 'index']);
-
-Route::get('/user/{id}/edit',
-    [UserController::class, 'edit']);
-
- Route::put('/user' ,
-    [UserController::class, 'edit_action']);
-
-Route::delete('/user/{id}',
-    [UserController::class, 'delete']);
+use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\CheckLogin;
 
 
-Route::get('/',
-    [HomeController::class, 'home']);
+Route::get(
+    '/login',
+    [LoginController::class, 'index']
+);
 
-Route::get('/login',
-    [LoginController::class, 'index']);
+Route::post(
+    '/login',
+    [LoginController::class, 'login']
+);
 
-Route::get('/registers' ,
-    [RegisterController::class, 'index']);
+Route::middleware([CheckLogin::class])->group(function () {
+    Route::get(
+        '/users',
+        [UserController::class, 'index']
+    );
 
- Route::post('/registers' ,
-    [RegisterController::class, 'create']);
+    Route::get(
+        '/user/{id}',
+        [UserController::class, 'edit']
+    );
 
-Route::get('/home', [HomeController::class, 'index']);
-Route::get('/', [HomeController::class, 'index']);
+    Route::put(
+        '/user',
+        [UserController::class, 'edit_action']
+    );
 
-Route::get('/hello', function () {
-    return "<h1>Hello World!</h1>";
+    Route::delete(
+        '/user',
+        [UserController::class, 'delete_user']
+    );
+
+    Route::get(
+        '/product',
+        [ProductController::class, 'index']
+    );
+
+    Route::post(
+        '/product',
+        [ProductController::class, 'add_product']
+    );
 });
 
-Route::get("/mycontroller/{id?}",
-    [MyController::class, 'myfunction']);
+Route::get(
+    '/',
+    [HomeController::class, 'index']
+)->middleware([CheckLogin::class]);
 
-Route::post("/mycontroller/{id?}",
-    [MyController::class, 'myfunction']);
+Route::get(
+    '/home',
+    [HomeController::class, 'index']
+)->middleware([CheckLogin::class]);
 
-Route::get('/500', function () {
-        abort(500);
-    });
+Route::get(
+    '/logout',
+    function () {
+        session()->forget('user');
+        session()->flush();
+        return redirect('/login');
+    }
+);
 
-Route::get('/404', function () {
-        abort(404);
-    });
+Route::get(
+    '/register',
+    [RegisterController::class, 'index']
+);
 
+Route::post(
+    '/register',
+    [RegisterController::class, 'create']
+);
+
+
+
+Route::post(
+    '/mycontroller',
+    [MyController::class, 'myFunction']
+);
+
+Route::get(
+    '/mycontroller',
+    [MyController::class, 'myFunction']
+);
+
+Route::get(
+    '/hello',
+    fn() => view('hello')
+);
